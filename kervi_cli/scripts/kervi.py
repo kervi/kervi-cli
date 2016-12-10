@@ -1,6 +1,9 @@
 import click
+from .commands.create import create
 
-@click.command()
+@click.group()
 def cli():
-    """Example script."""
-    click.echo('Hello World!')
+    pass
+
+cli.add_command(create)
+#entry_point.add_command(group2.version)    
