@@ -17,7 +17,7 @@ def create():
 @click.argument('app_name', 'Name of app, used at title in UI')
 @click.option('--platform', default=None, help='RPI')
 def application(app_name, app_id, platform):
-    click.echo('create app:'+app_name)
+    
     template_engine = SuperFormatter()
 
     cli_path = os.path.dirname(kervi_cli.__file__)
@@ -35,7 +35,7 @@ def application(app_name, app_id, platform):
         app_template,
         id=app_id,
         name=app_name,
-        log="kervi.log",
+        log=app_id,
         base_port=9500,
         websocket_port=nethelper.get_free_port(),
         ui_port=web_port,
@@ -72,3 +72,8 @@ def application(app_name, app_id, platform):
 
     if not os.path.exists("sensors/__init__.py"):
         copyfile(template_path+"sensors_init_tmpl.py", "sensors/__init__.py")
+
+
+    click.echo('Your app is ready')
+    click.echo("start it with python "+app_id+".py")
+    click.echo("launch UI with: http://" + nethelper.get_ip_address() + ":" + str(web_port))

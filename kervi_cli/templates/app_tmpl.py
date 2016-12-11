@@ -10,8 +10,9 @@ if __name__ == '__main__':
             "appKey":"",
         }},
         "log" : {{
-            "level":"debug",
-            "file":"{log}.log"
+            "level":"WARNING",
+            "file":"{log}.log",
+            "resetLog":True
         }},
         "modules":["sensors", "controllers"],
         "network":{{
@@ -22,5 +23,5 @@ if __name__ == '__main__':
             "IPCSecret":b"{secret}"
         }},
     }})
-    
+
     APP.run()
