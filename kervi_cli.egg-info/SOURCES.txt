@@ -16,11 +16,14 @@ kervi_cli/scripts/template_engine.py
 kervi_cli/scripts/commands/__init__.py
 kervi_cli/scripts/commands/create.py
 kervi_cli/templates/app_tmpl.py
+kervi_cli/templates/cam_tmpl.py
+kervi_cli/templates/cams_init_tmpl.py
 kervi_cli/templates/controller_tmpl.py
 kervi_cli/templates/controllers_init_tmpl.py
 kervi_cli/templates/dashboard_init_tmpl.py
 kervi_cli/templates/sensor_tmpl.py
 kervi_cli/templates/sensors_init_tmpl.py
+kervi_cli/templates/system_sensors_tmpl.py
 kervi_cli/scripts/__init__.py
 kervi_cli/scripts/kervi.py
 kervi_cli/scripts/scaffold_app.py
@@ -28,8 +31,11 @@ kervi_cli/scripts/template_engine.py
 kervi_cli/scripts/commands/__init__.py
 kervi_cli/scripts/commands/create.py
 kervi_cli/templates/app_tmpl.py
+kervi_cli/templates/cam_tmpl.py
+kervi_cli/templates/cams_init_tmpl.py
 kervi_cli/templates/controller_tmpl.py
 kervi_cli/templates/controllers_init_tmpl.py
 kervi_cli/templates/dashboard_init_tmpl.py
 kervi_cli/templates/sensor_tmpl.py
 kervi_cli/templates/sensors_init_tmpl.py
+kervi_cli/templates/system_sensors_tmpl.py

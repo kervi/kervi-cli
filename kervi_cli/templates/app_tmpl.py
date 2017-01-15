@@ -14,7 +14,7 @@ if __name__ == '__main__':
             "file":"{log}.log",
             "resetLog":True
         }},
-        "modules":["sensors", "controllers"],
+        "modules":["sensors", "controllers", "cams"],
         "network":{{
             "IPAddress": nethelper.get_ip_address(),
             "IPCBasePort":{base_port},

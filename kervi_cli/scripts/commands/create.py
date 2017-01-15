@@ -17,13 +17,12 @@ def create():
 @click.argument('app_name', 'Name of app, used at title in UI')
 @click.option('--platform', default=None, help='RPI')
 def application(app_name, app_id, platform):
-    
     template_engine = SuperFormatter()
 
     cli_path = os.path.dirname(kervi_cli.__file__)
     template_path = os.path.join(cli_path, "templates/")
 
-    web_ports = [80, 8080, 1234]
+    web_ports = [80, 8080, nethelper.get_free_port()]
     web_port = 0
     for port in web_ports:
         if nethelper.is_port_free(port):
@@ -47,11 +46,24 @@ def application(app_name, app_id, platform):
         app_file.write(app_file_content)
         app_file.close()
 
+    if not os.path.exists("web_assets"):
+        os.makedirs("web_assets")
+
     #dashboards
     if not os.path.exists("dashboards"):
         os.makedirs("dashboards")
     if not os.path.exists("dashboards/__init__.py"):
         copyfile(template_path+"dashboard_init_tmpl.py", "dashboards/__init__.py")
+
+    #cams
+    if not os.path.exists("cams"):
+        os.makedirs("cams")
+
+    if not os.path.exists("cams/__init__.py"):
+        copyfile(template_path+"cams_init_tmpl.py", "cams/__init__.py")
+
+    if not os.path.exists("cams/cam1.py"):
+        copyfile(template_path+"cam_tmpl.py", "cams/cam1.py")
 
     #controllers
     if not os.path.exists("controllers"):
@@ -69,6 +81,7 @@ def application(app_name, app_id, platform):
 
     if not os.path.exists("sensors/my_sensor.py"):
         copyfile(template_path+"sensor_tmpl.py", "sensors/my_sensor.py")
+        copyfile(template_path+"system_sensors_tmpl.py", "sensors/system_sensors.py")
 
     if not os.path.exists("sensors/__init__.py"):
         copyfile(template_path+"sensors_init_tmpl.py", "sensors/__init__.py")

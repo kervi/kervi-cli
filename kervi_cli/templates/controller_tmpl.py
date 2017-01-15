@@ -2,14 +2,13 @@
 from kervi.controller import Controller, ControllerNumberInput, ControllerButton
 
 class ControllerInput(ControllerNumberInput):
-    def __init__(self,controller):
+    def __init__(self, controller):
         ControllerNumberInput.__init__(self, "numberInput", "Number input", controller)
         self.type = "counter"
         self.unit = ""
         self.value = 0
         self.max_value = 359
         self.min_value = 0
-        self.ui = {"orientation":"horizontal"}
 
     def value_changed(self, new_value, old_value):
         print ("number input set value:", new_value)
@@ -21,6 +20,6 @@ class MyController(Controller):
 
         self.add_components(ControllerInput(self))
         self.parameters = {}
-        self.dashboards = ["main"]
 
-MY_CONTROLLER=MyController()
+
+MY_CONTROLLER = MyController()

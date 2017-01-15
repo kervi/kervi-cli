@@ -10,7 +10,7 @@ class MySensor(Sensor):
         self.min = 0
         self.reading_interval = 10
         self.unit = "C"
-        self.dashboards = ["main"]
+        self.add_to_dashboard("cam", "section1", ui_type="radial_gauge")
 
         #variables needed for my sensor
         self.counter = 0 #dummy counter

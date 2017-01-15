@@ -19,6 +19,8 @@ setup(
     include_package_data=True,
     install_requires=[
         'Click',
+        'psutil',
+        'pillow'
     ],
     entry_points='''
         [console_scripts]
