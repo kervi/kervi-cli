@@ -8,8 +8,9 @@ class MySensor(Sensor):
         self.type = "temp"
         self.max = 100
         self.min = 0
-        self.reading_interval = 10
         self.unit = "C"
+
+        #link the sensor to a dashboard section
         self.add_to_dashboard("cam", "section1", ui_type="radial_gauge")
 
         #variables needed for my sensor
@@ -17,7 +18,7 @@ class MySensor(Sensor):
         self.counter_delta = 1
 
     def read_sensor(self):
-        #read_sensor is called with self.reading_interval
+        #read_sensor is called by the SensorThread
         #snippet below is just dummy code
         #enter your real code here to read your sensor
 
@@ -31,4 +32,5 @@ class MySensor(Sensor):
         #call new_sensor_reading to signal a new value
         self.new_sensor_reading(self.counter)
 
-MY_SENSOR_THREAD = SensorThread(MySensor())
+#Add sensor to a SensorThread that polls the sensor by the specified interval 
+MY_SENSOR_THREAD = SensorThread(MySensor(),1)
