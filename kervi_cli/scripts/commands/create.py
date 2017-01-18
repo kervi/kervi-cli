@@ -75,6 +75,9 @@ def application(app_name, app_id, platform):
     if not os.path.exists("controllers/my_controller.py"):
         copyfile(template_path+"controller_tmpl.py", "controllers/my_controller.py")
 
+    if not os.path.exists("controllers/system_controller.py"):
+        copyfile(template_path+"system_controller_tmpl.py", "controllers/system_controller.py")
+
     #sensors
     if not os.path.exists("sensors"):
         os.makedirs("sensors")

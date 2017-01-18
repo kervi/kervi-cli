@@ -12,6 +12,7 @@ MAIN.add_section(DashboardSection("section1"))
 #Standard dashboard with several sections where sensors are placed.
 #Each sensor linkes to one or more dashboard sections 
 SYSTEM = Dashboard("system", "System")
-SYSTEM.add_section(DashboardSection("cpu", ui_columns=2))
-SYSTEM.add_section(DashboardSection("memory", ui_columns=2))
+SYSTEM.add_section(DashboardSection("cpu", ui_columns=2, ui_collapsed=True))
+SYSTEM.add_section(DashboardSection("memory", ui_columns=2, ui_collapsed=True))
 SYSTEM.add_section(DashboardSection("disk", ui_columns=2))
+SYSTEM.add_section(DashboardSection("power", ui_columns=1, ui_title="Power"))
