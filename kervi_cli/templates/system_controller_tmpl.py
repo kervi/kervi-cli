@@ -10,10 +10,11 @@ class PowerOffButton(ControllerButton):
             "Power off",
             controller
         )
-        self.add_to_dashboard("system", "power")
+        self.add_to_dashboard("system", "power", ui_icon="power-off")
 
     def click(self):
         print ("stop kervi")
+        self.user_log_message("stop kervi")
         self.controller.spine.send_command("stopKervi")
 
 
@@ -25,10 +26,11 @@ class RebootButton(ControllerButton):
             "Reboot",
             controller
         )
-        self.add_to_dashboard("system", "power")
+        self.add_to_dashboard("system", "power", ui_icon="repeat")
 
     def click(self):
         print ("restart kervi")
+        self.user_log_message("restart kervi")
         self.controller.spine.send_command("restartKervi")
 
 
