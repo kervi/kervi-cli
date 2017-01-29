@@ -11,7 +11,7 @@ class MySensor(Sensor):
         self.unit = "C"
 
         #link the sensor to a dashboard section
-        self.add_to_dashboard("cam", "section1", ui_type="radial_gauge")
+        self.link_to_dashboard("cam", "section1", type="radial_gauge")
 
         #variables needed for my sensor
         self.counter = 0 #dummy counter

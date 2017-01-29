@@ -1,5 +1,5 @@
 """
 Include the controller modules that you want to start with your Kervi application
 """
-import my_controller
-import system_controller
+from . import my_controller
+from . import system_controller

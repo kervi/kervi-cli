@@ -9,12 +9,6 @@ if __name__ == '__main__':
             "name":"{name}",
             "appKey":"",
         }},
-        "log" : {{
-            "level":"WARNING",
-            "file":"{log}.log",
-            "resetLog":True
-        }},
-        "modules":["sensors", "controllers", "cams"],
         "network":{{
             "IPAddress": nethelper.get_ip_address(),
             "IPCBasePort":{base_port},

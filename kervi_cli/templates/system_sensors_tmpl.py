@@ -15,9 +15,9 @@ class CPULoadSensor(Sensor):
         self.min = 0
         self.unit = "%"
         self.store_settings["active"] = False
-        self.add_to_dashboard("*", "sys-header")
-        self.add_to_dashboard("system", "cpu", ui_type="value", ui_size=2, add_to_header=True)
-        self.add_to_dashboard("system", "cpu", ui_type="chart", ui_size=2)
+        self.link_to_dashboard("*", "sys-header")
+        self.link_to_dashboard("system", "cpu", type="value", size=2, link_to_header=True)
+        self.link_to_dashboard("system", "cpu", type="chart", size=2)
 
         psutil.cpu_percent()
     def read_sensor(self):
@@ -33,9 +33,9 @@ class MemUseSensor(Sensor):
         self.unit = "%"
         self.store_settings["active"] = False
         self.store_settings["delta"] = 0.01
-        self.add_to_dashboard("*", "sys-header")
-        self.add_to_dashboard("system", "memory", ui_type="value", ui_size=2, add_to_header=True)
-        self.add_to_dashboard("system", "memory", ui_type="chart", ui_size=2)
+        self.link_to_dashboard("*", "sys-header")
+        self.link_to_dashboard("system", "memory", type="value", size=2, link_to_header=True)
+        self.link_to_dashboard("system", "memory", type="chart", size=2)
 
         try:
             percent = psutil.virtual_memory().percent
@@ -60,7 +60,7 @@ class DiskUseSensor(Sensor):
         self.unit = "%"
         self.store_settings["active"] = False
         self.store_settings["delta"] = 0.01
-        self.add_to_dashboard("system", "disk", ui_type="radial_gauge", ui_size=2)
+        self.link_to_dashboard("system", "disk", type="radial_gauge", size=1)
 
         percent = psutil.disk_usage('/').percent
         self.value = percent

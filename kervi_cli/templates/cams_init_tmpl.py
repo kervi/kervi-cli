@@ -1,2 +1,2 @@
 """ include the cam modules here"""
-import cam1
+from . import cam1

@@ -10,7 +10,7 @@ class PowerOffButton(ControllerButton):
             "Power off",
             controller
         )
-        self.add_to_dashboard("system", "power", ui_icon="power-off")
+        self.link_to_dashboard("system", "power", icon="power-off")
 
     def click(self):
         print ("stop kervi")
@@ -22,11 +22,11 @@ class RebootButton(ControllerButton):
     def __init__(self, controller):
         ControllerButton.__init__(
             self,
-            controller.component_id+".reebotDown",
+            controller.component_id + ".reebotDown",
             "Reboot",
             controller
         )
-        self.add_to_dashboard("system", "power", ui_icon="repeat")
+        self.link_to_dashboard("system", "power", icon="repeat")
 
     def click(self):
         print ("restart kervi")
