@@ -10,11 +10,10 @@ class CPULoadSensor(Sensor):
     """ Sensor that mesures cpu load on host """
     def __init__(self):
         Sensor.__init__(self, "CPULoadSensor", "CPU")
-        self.reading_interval = 1
         self.max = 100
         self.min = 0
         self.unit = "%"
-        self.store_settings["active"] = False
+        self.store_to_db = False
         self.link_to_dashboard("*", "sys-header")
         self.link_to_dashboard("system", "cpu", type="value", size=2, link_to_header=True)
         self.link_to_dashboard("system", "cpu", type="chart", size=2)
@@ -27,12 +26,11 @@ class MemUseSensor(Sensor):
     """ Sensor that mesures memory use """
     def __init__(self):
         Sensor.__init__(self, "MemUse", "Memory")
-        self.reading_interval = 1
         self.max = 100
         self.min = 0
         self.unit = "%"
-        self.store_settings["active"] = False
-        self.store_settings["delta"] = 0.01
+        self.store_to_db = False
+        self.store_delta = 0.01
         self.link_to_dashboard("*", "sys-header")
         self.link_to_dashboard("system", "memory", type="value", size=2, link_to_header=True)
         self.link_to_dashboard("system", "memory", type="chart", size=2)
@@ -58,8 +56,8 @@ class DiskUseSensor(Sensor):
         self.max = 100
         self.min = 0
         self.unit = "%"
-        self.store_settings["active"] = False
-        self.store_settings["delta"] = 0.01
+        self.store_to_db = False
+        self.store_delta = 0.01
         self.link_to_dashboard("system", "disk", type="radial_gauge", size=1)
 
         percent = psutil.disk_usage('/').percent
