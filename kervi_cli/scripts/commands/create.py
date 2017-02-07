@@ -92,4 +92,3 @@ def application(app_name, app_id, platform):
 
     click.echo('Your app is ready')
     click.echo("start it with python "+app_id+".py")
-    click.echo("launch UI with: http://" + nethelper.get_ip_address() + ":" + str(web_port))
