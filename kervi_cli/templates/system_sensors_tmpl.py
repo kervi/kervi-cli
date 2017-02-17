@@ -4,67 +4,24 @@
 """ Module that defines core cpu sensors """
 
 from kervi.sensor import Sensor, SensorThread
-import psutil
+from kervi_devices.platforms.common.sensors.cpu_use import CPULoadDevice
+from kervi_devices.platforms.common.sensors.memory_use import MemUseSensor
+from kervi_devices.platforms.common.sensors.disk_use import DiskUseSensor
 
-class CPULoadSensor(Sensor):
-    """ Sensor that mesures cpu load on host """
-    def __init__(self):
-        Sensor.__init__(self, "CPULoadSensor", "CPU")
-        self.max = 100
-        self.min = 0
-        self.unit = "%"
-        self.store_to_db = False
-        self.link_to_dashboard("*", "sys-header")
-        self.link_to_dashboard("system", "cpu", type="value", size=2, link_to_header=True)
-        self.link_to_dashboard("system", "cpu", type="chart", size=2)
 
-        psutil.cpu_percent()
-    def read_sensor(self):
-        self.new_sensor_reading(psutil.cpu_percent())
+cpu_sensor = Sensor("CPULoadSensor","CPU", CPULoadDevice())
+cpu_sensor.store_to_db = False
+cpu_sensor.link_to_dashboard("*", "sys-header")
+cpu_sensor.link_to_dashboard("system", "cpu", type="value", size=2, link_to_header=True)
+cpu_sensor.link_to_dashboard("system", "cpu", type="chart", size=2)
 
-class MemUseSensor(Sensor):
-    """ Sensor that mesures memory use """
-    def __init__(self):
-        Sensor.__init__(self, "MemUse", "Memory")
-        self.max = 100
-        self.min = 0
-        self.unit = "%"
-        self.store_to_db = False
-        self.store_delta = 0.01
-        self.link_to_dashboard("*", "sys-header")
-        self.link_to_dashboard("system", "memory", type="value", size=2, link_to_header=True)
-        self.link_to_dashboard("system", "memory", type="chart", size=2)
+mem_sensor = Sensor("MemLoadSensor", "Memory", MemUseSensor())
+mem_sensor.store_to_db = False
+mem_sensor.link_to_dashboard("*", "sys-header")
+mem_sensor.link_to_dashboard("system", "memory", type="value", size=2, link_to_header=True)
+mem_sensor.link_to_dashboard("system", "memory", type="chart", size=2)
 
-        try:
-            percent = psutil.virtual_memory().percent
-        except:
-            percent = psutil.phymem_usage().percent
-        self.value = percent
-
-    def read_sensor(self):
-        try:
-            percent = psutil.virtual_memory().percent
-        except:
-            percent = psutil.phymem_usage().percent
-        self.new_sensor_reading(percent)
-
-class DiskUseSensor(Sensor):
-    """ Sensor that mesures disk use """
-    def __init__(self):
-        Sensor.__init__(self, "DiskUse", "Disk usage")
-        self.reading_interval = 1
-        self.max = 100
-        self.min = 0
-        self.unit = "%"
-        self.store_to_db = False
-        self.store_delta = 0.01
-        self.link_to_dashboard("system", "disk", type="radial_gauge", size=1)
-
-        percent = psutil.disk_usage('/').percent
-        self.value = percent
-
-    def read_sensor(self):
-        percent = psutil.disk_usage('/').percent
-        self.new_sensor_reading(percent)
-
-SensorThread([CPULoadSensor(), MemUseSensor(), DiskUseSensor()])
+disk_sensor = Sensor("DiskUseSensor", "Disk", DiskUseSensor())
+disk_sensor.store_to_db = False
+disk_sensor.link_to_dashboard("*", "sys-header")
+disk_sensor.link_to_dashboard("system", "disk", type="vertical-linear-gauge", size=2, link_to_header=True)

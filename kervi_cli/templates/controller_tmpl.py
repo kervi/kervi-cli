@@ -31,7 +31,7 @@ class LightLevel(ControllerNumberInput):
             controller
         )
 
-    def value_changed(self, value):
+    def value_changed(self, value, old_value):
         #User has changed level
         #Set pwm controller
         print("Update light pwm:", value)
