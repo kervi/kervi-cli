@@ -24,4 +24,4 @@ mem_sensor.link_to_dashboard("system", "memory", type="chart", size=2)
 disk_sensor = Sensor("DiskUseSensor", "Disk", DiskUseSensor())
 disk_sensor.store_to_db = False
 disk_sensor.link_to_dashboard("*", "sys-header")
-disk_sensor.link_to_dashboard("system", "disk", type="vertical-linear-gauge", size=2, link_to_header=True)
+disk_sensor.link_to_dashboard("system", "disk", type="vertical_linear_gauge", size=2)

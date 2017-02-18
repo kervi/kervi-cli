@@ -9,6 +9,7 @@ if __name__ == '__main__':
             "name":"{name}",
             "appKey":"",
         }},
+        "modules":["sensors", "controllers", "cams"],
         "network":{{
             "IPAddress": nethelper.get_ip_address(),
             "IPCBasePort":{base_port},

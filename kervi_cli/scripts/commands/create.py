@@ -22,22 +22,15 @@ def application(app_name, app_id, platform):
     cli_path = os.path.dirname(kervi_cli.__file__)
     template_path = os.path.join(cli_path, "templates/")
 
-    web_ports = [80, 8080, nethelper.get_free_port()]
-    web_port = 0
-    for port in web_ports:
-        if nethelper.is_port_free(port):
-            web_port = port
-            break
-
     app_template = open(template_path+"app_tmpl.py", 'r').read()
     app_file_content = template_engine.format(
         app_template,
         id=app_id,
         name=app_name,
         log=app_id,
-        base_port=9500,
-        websocket_port=nethelper.get_free_port(),
-        ui_port=web_port,
+        base_port=nethelper.get_free_port([9500, 9510]),
+        websocket_port=nethelper.get_free_port([9000]),
+        ui_port=nethelper.get_free_port([80, 8080, 8081]),
         secret=uuid.uuid4()
     )
 

@@ -1,10 +1,10 @@
 """ Sample controller """
-from kervi.controller import Controller, ControllerNumberInput, ControllerButton
+from kervi.controller import Controller, UINumberControllerInput, UIButtonControllerInput
 
 
-class PowerOffButton(ControllerButton):
+class PowerOffButton(UIButtonControllerInput):
     def __init__(self, controller):
-        ControllerButton.__init__(
+        UIButtonControllerInput.__init__(
             self,
             controller.component_id+".powerDown",
             "Power off",
@@ -18,9 +18,9 @@ class PowerOffButton(ControllerButton):
         self.controller.spine.send_command("stopKervi")
 
 
-class RebootButton(ControllerButton):
+class RebootButton(UIButtonControllerInput):
     def __init__(self, controller):
-        ControllerButton.__init__(
+        UIButtonControllerInput.__init__(
             self,
             controller.component_id + ".reebotDown",
             "Reboot",
@@ -40,7 +40,7 @@ class SystemController(Controller):
         Controller.__init__(self, "systemController", "System")
         self.type = "controller_category"
 
-        self.add_components(PowerOffButton(self), RebootButton(self))
+        self.add_input(PowerOffButton(self), RebootButton(self))
         self.parameters = {}
 
 

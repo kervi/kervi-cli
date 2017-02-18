@@ -1,10 +1,10 @@
 """ Sample controller """
-from kervi.controller import Controller, ControllerNumberInput, ControllerSwitchButton
+from kervi.controller import Controller, UINumberControllerInput, UISwitchButtonControllerInput
 
 #Switch button shown on a dashboard
-class LightButton(ControllerSwitchButton):
+class LightButton(UISwitchButtonControllerInput):
     def __init__(self, controller):
-        ControllerSwitchButton.__init__(
+        UISwitchButtonControllerInput.__init__(
             self,
             controller.component_id+".light",
             "Light 1",
@@ -22,9 +22,9 @@ class LightButton(ControllerSwitchButton):
         #set GPIO pin low
         print("set GPIO pin 23 low")
 
-class LightLevel(ControllerNumberInput):
+class LightLevel(UINumberControllerInput):
     def __init__(self, controller):
-        ControllerNumberInput.__init__(
+        UINumberControllerInput.__init__(
             self,
             controller.component_id+".lightLevel",
             "level",
@@ -41,7 +41,7 @@ class LightController(Controller):
         Controller.__init__(self, "lightController", "Light")
         self.type = "light"
 
-        self.add_components(LightButton(self), LightLevel(self))
+        self.add_input(LightButton(self), LightLevel(self))
         self.link_to_dashboard("system", "light")
 
 LIGHT_CONTROLLER = LightController()

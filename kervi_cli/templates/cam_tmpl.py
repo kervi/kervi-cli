@@ -14,7 +14,7 @@ class Cam_1(FrameCamera):
             draw.rectangle([(self.width/2-50, self.height/2-50), (self.width/2+50, self.height/2+50)])
             draw.rectangle([(10, 10), (self.width-10, self.height-10)])
             picture_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S:%f")
-            draw.text((15, 15), picture_time[:-5], font=self.font)
+            draw.text((15, 15), "Dummy cam -" + picture_time[:-5], font=self.font)
             self.frame_ready(image)
             self.wait_next_frame()
 
