@@ -2,13 +2,6 @@
 from kervi.dashboard import Dashboard, Camboard, DashboardPanel
 
 #Create the dashboards for your Kervi application here.
-
-#A camboard is a special dashbord where the background is a video feed.
-#is_default signals that this dashbord is shown first when ui starts.
-#cam1 is the id of the camera that should be used as video source.
-MAIN = Camboard("cam", "Main", "cam1", is_default=True)
-MAIN.add_panel(DashboardPanel("section1"))
-
 #Standard dashboard with several panels where sensors are placed.
 #Each sensor create links to one or more dashboard panels 
 SYSTEM = Dashboard("system", "System")

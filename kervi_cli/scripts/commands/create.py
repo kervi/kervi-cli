@@ -7,38 +7,41 @@ import kervi.utility.nethelper as nethelper
 import click
 from kervi_cli.scripts.template_engine import SuperFormatter
 import kervi_cli
+import pip
 
-@click.group()
-def create():
-    pass
+def _detect_rpi():
+    installed_packages = pip.get_installed_distributions()
+    flat_installed_packages = [package.project_name for package in installed_packages]
+    if "kervi-hal-rpi" in flat_installed_packages:
+        import subprocess
+        cam_info = subprocess.check_output(["vcgencmd", "get_camera"])
+        cam_active = int(cam_info.strip()[-1])
+        return {
+            "cam_installed": cam_active
+        }
+    else:
+        return None
 
-@create.command()
-@click.argument('app_id', "Id of application, used in code to identify app")
-@click.argument('app_name', 'Name of app, used at title in UI')
-@click.option('--platform', default=None, help='RPI')
-def application(app_name, app_id, platform):
-    template_engine = SuperFormatter()
+def _create_cam(template_path):
+    #template_engine = SuperFormatter()
 
-    cli_path = os.path.dirname(kervi_cli.__file__)
-    template_path = os.path.join(cli_path, "templates/")
+    with open('cams/__init__.py', 'a') as file:
+        file.writelines('from . import cam1')
 
-    app_template = open(template_path+"app_tmpl.py", 'r').read()
-    app_file_content = template_engine.format(
-        app_template,
-        id=app_id,
-        name=app_name,
-        log=app_id,
-        base_port=nethelper.get_free_port([9500, 9510]),
-        websocket_port=nethelper.get_free_port([9000]),
-        ui_port=nethelper.get_free_port([80, 8080, 8081]),
-        secret=uuid.uuid4()
-    )
+    if os.path.exists("dashboards"):
+        with open('dashboards/__init__.py', 'a') as file:
+            file.writelines('CAM = Camboard("cam", "Cam 1", "cam1", is_default=True)\n')
+            file.writelines('CAM.add_panel(DashboardPanel("section1"))\n')
 
-    if not os.path.exists(app_id+".py"):
-        app_file = open(app_id+".py", "w")
-        app_file.write(app_file_content)
-        app_file.close()
+    if not os.path.exists("cams/cam1.py"):
+        rpi_info = _detect_rpi()
+        if rpi_info and rpi_info["cam_installed"]:
+            copyfile(template_path+"rpi_cam_tmpl.py", "cams/cam1.py")
+        else:
+            copyfile(template_path+"cam_tmpl.py", "cams/cam1.py")
 
+def create_full_layout(template_path):
+    
     if not os.path.exists("web_assets"):
         os.makedirs("web_assets")
 
@@ -48,15 +51,12 @@ def application(app_name, app_id, platform):
     if not os.path.exists("dashboards/__init__.py"):
         copyfile(template_path+"dashboard_init_tmpl.py", "dashboards/__init__.py")
 
-    #cams
+    #cam
     if not os.path.exists("cams"):
         os.makedirs("cams")
 
     if not os.path.exists("cams/__init__.py"):
         copyfile(template_path+"cams_init_tmpl.py", "cams/__init__.py")
-
-    if not os.path.exists("cams/cam1.py"):
-        copyfile(template_path+"cam_tmpl.py", "cams/cam1.py")
 
     #controllers
     if not os.path.exists("controllers"):
@@ -83,5 +83,58 @@ def application(app_name, app_id, platform):
         copyfile(template_path+"sensors_init_tmpl.py", "sensors/__init__.py")
 
 
+
+@click.group()
+def create():
+    pass
+
+@create.command()
+@click.argument('app_id', "Id of application, used in code to identify app")
+@click.argument('app_name', 'Name of app, used at title in UI')
+@click.option('--one_file_app', is_flag=True, help='Create an app in one file')
+@click.option('--add_camera', default=False, help='adds a camera')
+def application(app_name, app_id, one_file_app, add_camera):
+    template_engine = SuperFormatter()
+
+    print("of", one_file_app)
+
+    cli_path = os.path.dirname(kervi_cli.__file__)
+    template_path = os.path.join(cli_path, "templates/")
+
+    if one_file_app:
+        if not os.path.exists(app_id+".py"):
+            copyfile(template_path + "app_simple_tmpl.py", app_id+".py")
+    else:
+        app_template = open(template_path+"app_tmpl.py", 'r').read()
+
+        app_file_content = template_engine.format(
+            app_template,
+            id=app_id,
+            name=app_name,
+            log=app_id,
+            base_port=nethelper.get_free_port([9500, 9510]),
+            websocket_port=nethelper.get_free_port([9000]),
+            ui_port=nethelper.get_free_port([80, 8080, 8081]),
+            secret=uuid.uuid4()
+        )
+
+        if not os.path.exists(app_id+".py"):
+            app_file = open(app_id+".py", "w")
+            app_file.write(app_file_content)
+            app_file.close()
+
+    if not one_file_app:
+        create_full_layout(template_path)
+    
+
+    if add_camera:
+        _create_cam(template_path)
+
     click.echo('Your app is ready')
     click.echo("start it with python "+app_id+".py")
+
+@create.command()
+def camera():
+    cli_path = os.path.dirname(kervi_cli.__file__)
+    template_path = os.path.join(cli_path, "templates/")
+    _create_cam(template_path)
