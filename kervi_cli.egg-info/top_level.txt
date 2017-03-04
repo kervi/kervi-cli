@@ -1,4 +1,0 @@
-kervi_cli
-kervi_cli/scripts
-kervi_cli/scripts/commands
-kervi_cli/templates

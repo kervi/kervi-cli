@@ -1,4 +1,0 @@
-
-        [console_scripts]
-        kervi=kervi_cli.scripts.kervi:cli
-    
