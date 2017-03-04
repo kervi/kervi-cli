@@ -14,7 +14,7 @@ class LightController(Controller):
         self.level_input = UINumberControllerInput("lightctrl.level", "Level", self)
         self.level_input.min = 0
         self.level_input.max = 100
-        self.level_input.value = 100
+        self.level_input.value = 0
         self.level_input.link_to_dashboard("system", "light")
 
         #define GPIO
@@ -23,7 +23,7 @@ class LightController(Controller):
     def input_changed(self, changed_input):
         if changed_input == self.light_button:
             if changed_input.value:
-                GPIO.pwn_start(12)
+                GPIO.pwm_start(12)
             else:
                 GPIO.pwm_stop(12)
 
