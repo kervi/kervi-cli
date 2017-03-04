@@ -10,10 +10,16 @@ class PowerOffButton(UIButtonControllerInput):
             "Power off",
             controller
         )
-        self.link_to_dashboard("system", "power", icon="power-off")
+        self.link_to_dashboard(
+            "system",
+            "power",
+            inline=True,
+            button_text=None,
+            button_icon="power-off"
+        )
 
     def click(self):
-        print ("stop kervi")
+        print("stop kervi")
         self.user_log_message("stop kervi")
         self.controller.spine.send_command("stopKervi")
 
@@ -26,10 +32,16 @@ class RebootButton(UIButtonControllerInput):
             "Reboot",
             controller
         )
-        self.link_to_dashboard("system", "power", icon="repeat")
+        self.link_to_dashboard(
+            "system",
+            "power",
+            inline=True,
+            button_text=None,
+            button_icon="repeat"
+        )
 
     def click(self):
-        print ("restart kervi")
+        print("restart kervi")
         self.user_log_message("restart kervi")
         self.controller.spine.send_command("restartKervi")
 
@@ -40,8 +52,7 @@ class SystemController(Controller):
         Controller.__init__(self, "systemController", "System")
         self.type = "controller_category"
 
-        self.add_input(PowerOffButton(self), RebootButton(self))
-        self.parameters = {}
-
+        PowerOffButton(self)
+        RebootButton(self)
 
 MY_CONTROLLER = SystemController()

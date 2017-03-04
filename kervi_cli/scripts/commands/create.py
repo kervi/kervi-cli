@@ -7,41 +7,24 @@ import kervi.utility.nethelper as nethelper
 import click
 from kervi_cli.scripts.template_engine import SuperFormatter
 import kervi_cli
-import pip
-
-def _detect_rpi():
-    installed_packages = pip.get_installed_distributions()
-    flat_installed_packages = [package.project_name for package in installed_packages]
-    if "kervi-hal-rpi" in flat_installed_packages:
-        import subprocess
-        cam_info = subprocess.check_output(["vcgencmd", "get_camera"])
-        cam_active = int(cam_info.strip()[-1])
-        return {
-            "cam_installed": cam_active
-        }
-    else:
-        return None
+#import pip
 
 def _create_cam(template_path):
     #template_engine = SuperFormatter()
 
     with open('cams/__init__.py', 'a') as file:
-        file.writelines('from . import cam1')
+        file.writelines('\nfrom . import cam1')
 
-    if os.path.exists("dashboards"):
-        with open('dashboards/__init__.py', 'a') as file:
-            file.writelines('CAM = Camboard("cam", "Cam 1", "cam1", is_default=True)\n')
-            file.writelines('CAM.add_panel(DashboardPanel("section1"))\n')
+    # if os.path.exists("dashboards"):
+    #     with open('dashboards/__init__.py', 'a') as file:
+    #         file.writelines('CAM = Camboard("cam", "Cam 1", "cam1", is_default=True)\n')
+    #         file.writelines('CAM.add_panel(DashboardPanel("section1"))\n')
 
     if not os.path.exists("cams/cam1.py"):
-        rpi_info = _detect_rpi()
-        if rpi_info and rpi_info["cam_installed"]:
-            copyfile(template_path+"rpi_cam_tmpl.py", "cams/cam1.py")
-        else:
-            copyfile(template_path+"cam_tmpl.py", "cams/cam1.py")
+        copyfile(template_path+"cam_tmpl.py", "cams/cam1.py")
 
 def create_full_layout(template_path):
-    
+
     if not os.path.exists("web_assets"):
         os.makedirs("web_assets")
 
@@ -91,17 +74,16 @@ def create():
 @create.command()
 @click.argument('app_id', "Id of application, used in code to identify app")
 @click.argument('app_name', 'Name of app, used at title in UI')
-@click.option('--one_file_app', is_flag=True, help='Create an app in one file')
+@click.option('--single_file_app', is_flag=True, help='Create the kervi application in one file')
 @click.option('--add_camera', default=False, help='adds a camera')
-def application(app_name, app_id, one_file_app, add_camera):
+def application(app_name, app_id, single_file_app, add_camera):
     template_engine = SuperFormatter()
 
-    print("of", one_file_app)
-
+    
     cli_path = os.path.dirname(kervi_cli.__file__)
     template_path = os.path.join(cli_path, "templates/")
 
-    if one_file_app:
+    if single_file_app:
         if not os.path.exists(app_id+".py"):
             copyfile(template_path + "app_simple_tmpl.py", app_id+".py")
     else:
@@ -123,9 +105,9 @@ def application(app_name, app_id, one_file_app, add_camera):
             app_file.write(app_file_content)
             app_file.close()
 
-    if not one_file_app:
+    if not single_file_app:
         create_full_layout(template_path)
-    
+
 
     if add_camera:
         _create_cam(template_path)

@@ -4,7 +4,7 @@ from kervi.dashboard import Dashboard, Camboard, DashboardPanel
 #Create the dashboards for your Kervi application here.
 #Standard dashboard with several panels where sensors are placed.
 #Each sensor create links to one or more dashboard panels 
-SYSTEM = Dashboard("system", "System")
+SYSTEM = Dashboard("system", "System", is_default=True)
 SYSTEM.add_panel(DashboardPanel("cpu", columns=2, rows=2, collapsed=True))
 SYSTEM.add_panel(DashboardPanel("memory", columns=2, rows=2, collapsed=True))
 SYSTEM.add_panel(DashboardPanel("log", columns=2, rows=2, title="Log", user_log=True))

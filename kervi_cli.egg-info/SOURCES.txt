@@ -16,6 +16,7 @@ kervi_cli/scripts/template_engine.py
 kervi_cli/scripts/commands/__init__.py
 kervi_cli/scripts/commands/create.py
 kervi_cli/templates/__init__.py
+kervi_cli/templates/app_simple_tmpl.py
 kervi_cli/templates/app_tmpl.py
 kervi_cli/templates/cam_tmpl.py
 kervi_cli/templates/cams_init_tmpl.py
@@ -33,6 +34,7 @@ kervi_cli/scripts/template_engine.py
 kervi_cli/scripts/commands/__init__.py
 kervi_cli/scripts/commands/create.py
 kervi_cli/templates/__init__.py
+kervi_cli/templates/app_simple_tmpl.py
 kervi_cli/templates/app_tmpl.py
 kervi_cli/templates/cam_tmpl.py
 kervi_cli/templates/cams_init_tmpl.py

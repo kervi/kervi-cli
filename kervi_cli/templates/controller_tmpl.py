@@ -1,48 +1,35 @@
 """ Sample controller """
 from kervi.controller import Controller, UINumberControllerInput, UISwitchButtonControllerInput
-
+from kervi.hal import GPIO
 #Switch button shown on a dashboard
-class LightButton(UISwitchButtonControllerInput):
-    def __init__(self, controller):
-        UISwitchButtonControllerInput.__init__(
-            self,
-            controller.component_id+".light",
-            "Light 1",
-            controller
-        )
-        self.set_ui_parameter("size",0)
-
-    def on(self):
-        #event fired when user click the button in UI
-        #set GPIO pin high
-        print("set GPIO pin 23 heigh")
-
-    def off(self):
-        #event fired when user click the button in UI
-        #set GPIO pin low
-        print("set GPIO pin 23 low")
-
-class LightLevel(UINumberControllerInput):
-    def __init__(self, controller):
-        UINumberControllerInput.__init__(
-            self,
-            controller.component_id+".lightLevel",
-            "level",
-            controller
-        )
-
-    def value_changed(self, value, old_value):
-        #User has changed level
-        #Set pwm controller
-        print("Update light pwm:", value)
-
 class LightController(Controller):
     def __init__(self):
         Controller.__init__(self, "lightController", "Light")
         self.type = "light"
 
-        self.add_input(LightButton(self), LightLevel(self))
-        self.link_to_dashboard("system", "light")
+        #define an input and link it to the dashboard panel
+        self.light_button = UISwitchButtonControllerInput("lightctrl.on", "Light", self)
+        self.light_button.link_to_dashboard("system", "light", label_icon="light")
 
-LIGHT_CONTROLLER = LightController()
+        self.level_input = UINumberControllerInput("lightctrl.level", "Level", self)
+        self.level_input.min = 0
+        self.level_input.max = 100
+        self.level_input.value = 100
+        self.level_input.link_to_dashboard("system", "light")
+
+        #define GPIO
+        GPIO.define_as_pwm(12, self.level_input.value)
+
+    def input_changed(self, changed_input):
+        if changed_input == self.light_button:
+            if changed_input.value:
+                GPIO.pwn_start(12)
+            else:
+                GPIO.pwm_stop(12)
+
+        if changed_input.input_id == "lightctrl.level":
+            #change the duty_cycle on the pwm pin
+            GPIO.pwm_start(12, duty_cycle=changed_input.value)
+
+LightController()
 
