@@ -21,7 +21,7 @@ if __name__ == '__main__':
     #link camera as background
     CAMERA.link_to_dashboard("app")
     #link camera to a panel
-    CAMERA.link_to_dashboard("system", "cam")
+    #CAMERA.link_to_dashboard("system", "cam")
 
     from kervi.sensor import Sensor
     from kervi_devices.platforms.common.sensors.cpu_use import CPULoadSensorDeviceDriver
@@ -46,7 +46,7 @@ if __name__ == '__main__':
 
             #define an input and link it to the dashboard panel
             light1 = UISwitchButtonControllerInput("lightctrl.light1", "Light", self)
-            light1.link_to_dashboard("app", "light", icon="light", size=0)
+            light1.link_to_dashboard("app", "light", label_icon="light", size=0)
 
             #define GPIO
             GPIO.define_as_output(12)
