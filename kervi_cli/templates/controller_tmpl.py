@@ -9,16 +9,16 @@ class LightController(Controller):
 
         #define an input and link it to the dashboard panel
         self.light_button = UISwitchButtonControllerInput("lightctrl.on", "Light", self)
-        self.light_button.link_to_dashboard("system", "light", label_icon="light")
+        self.light_button.link_to_dashboard("app", "light", label_icon="light")
 
         self.level_input = UINumberControllerInput("lightctrl.level", "Level", self)
         self.level_input.min = 0
         self.level_input.max = 100
         self.level_input.value = 0
-        self.level_input.link_to_dashboard("system", "light")
+        self.level_input.link_to_dashboard("app", "light")
 
         #define GPIO
-        GPIO.define_as_pwm(12, self.level_input.value)
+        GPIO.define_as_pwm(12, 50)
 
     def input_changed(self, changed_input):
         if changed_input == self.light_button:

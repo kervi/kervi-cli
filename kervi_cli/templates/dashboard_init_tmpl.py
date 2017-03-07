@@ -6,6 +6,7 @@ from kervi.dashboard import Dashboard, Camboard, DashboardPanel
 #Each sensor create links to one or more dashboard panels 
 APP_DASHBOARD = Dashboard("app", "My dashboard", is_default=True)
 APP_DASHBOARD.add_panel(DashboardPanel("light", columns=2, rows=1, title="Light"))
+APP_DASHBOARD.add_panel(DashboardPanel("sensors", columns=2, rows=1, title="Sensors"))
 
 SYSTEM_DASHBOARD = Dashboard("system", "System")
 SYSTEM_DASHBOARD.add_panel(DashboardPanel("cpu", columns=2, rows=2))

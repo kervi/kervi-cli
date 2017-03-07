@@ -12,7 +12,7 @@ if __name__ == '__main__':
         "modules":["sensors", "controllers", "cams"],
         "network":{{
             "IPAddress": nethelper.get_ip_address(),
-            "IPCBasePort":{base_port},
+            "IPCRootPort":{base_port},
             "WebSocketPort":{websocket_port},
             "WebPort": {ui_port},
             "IPCSecret":b"{secret}"

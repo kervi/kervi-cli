@@ -120,3 +120,42 @@ def camera():
     cli_path = os.path.dirname(kervi_cli.__file__)
     template_path = os.path.join(cli_path, "templates/")
     _create_cam(template_path)
+
+@create.command()
+@click.argument('module_id', "Id of module, used in code to identify the module")
+@click.argument('module_name', 'Name of module, used as title in UI')
+@click.option('--single_file_module', is_flag=True, help='Create the kervi module in one file')
+@click.option('--add_camera', default=False, help='adds a camera')
+def module(module_name, module_id, single_file_module, add_camera):
+    template_engine = SuperFormatter()
+
+    cli_path = os.path.dirname(kervi_cli.__file__)
+    template_path = os.path.join(cli_path, "templates/")
+
+    module_template = open(template_path+"module_simple_tmpl.py", 'r').read()
+
+    module_file_content = template_engine.format(
+        module_template,
+        id=module_id,
+        name=module_name,
+        log=module_id,
+        base_port=nethelper.get_free_port([9500, 9510]),
+        secret=uuid.uuid4(),
+        app_ip=nethelper.get_ip_address(),
+        module_ip=nethelper.get_ip_address()
+    )
+
+    if not os.path.exists(module_id+".py"):
+        module_file = open(module_id+".py", "w")
+        module_file.write(module_file_content)
+        module_file.close()
+
+    #if not single_file_module:
+    #    create_full_layout(template_path)
+
+
+    #if add_camera:
+    #    _create_cam(template_path)
+
+    click.echo('Your module is ready')
+    click.echo("start it with python " + module_id + ".py")
