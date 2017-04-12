@@ -5,7 +5,6 @@ from PIL import Image, ImageDraw
 class Cam_1(CameraStreamer):
      def __init__(self):
          CameraStreamer.__init__(self, "cam1", "camera 1")
-         self.font = self.get_font()
 
      def pan_changed(self, pan_value):
          #The user has changed the pan in ui.
