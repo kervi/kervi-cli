@@ -72,8 +72,8 @@ def create():
     pass
 
 @create.command()
-@click.argument('app_id', "Id of application, used in code to identify app")
-@click.argument('app_name', 'Name of app, used at title in UI')
+@click.argument('app_id', "app_id, id of application, used in code to identify app")
+@click.argument('app_name', 'Name of app, used as title in UI')
 @click.option('--single_file_app', is_flag=True, help='Create the kervi application in one file')
 @click.option('--add_camera', default=False, help='adds a camera')
 def application(app_name, app_id, single_file_app, add_camera):
@@ -159,3 +159,11 @@ def module(module_name, module_id, single_file_module, add_camera):
 
     click.echo('Your module is ready')
     click.echo("start it with python " + module_id + ".py")
+
+@create.command()
+@click.argument('user_name', "user name")
+@click.password_option()
+@click.option('--name',  help='name of user')
+@click.option('--roles',  help='user roles')
+def user(name, user_name, password, roles):
+    print(name, user_name, roles, password)
