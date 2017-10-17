@@ -1,6 +1,6 @@
 if __name__ == '__main__':
-    from kervi.bootstrap import ApplicationModule
-    APP_MODULE = ApplicationModule({{
+    from kervi.module import Module
+    APP_MODULE = Module({{
         "info":{{
             "id":"{id}",
             "name":"{name}"
