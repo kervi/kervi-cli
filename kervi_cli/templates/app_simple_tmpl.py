@@ -5,12 +5,23 @@ if __name__ == '__main__':
     from kervi.hal import GPIO
 
     from kervi.dashboard import Dashboard, DashboardPanel
-    DASHBOARD = Dashboard("app", "App", is_default=True)
-    DASHBOARD.add_panel(DashboardPanel("fan", columns=3, rows=2, title="CPU fan"))
+    Dashboard(
+        "app",
+        "App",
+        [
+            DashboardPanel("fan", title="CPU fan")
+        ],
+        is_default=True
+    )
 
-    SYSTEMBOARD = Dashboard("system", "System")
-    SYSTEMBOARD.add_panel(DashboardPanel("cpu", columns=2, rows=2))
-    SYSTEMBOARD.add_panel(DashboardPanel("cam", columns=2, rows=2))
+    Dashboard(
+        "system",
+        "System",
+        [
+            DashboardPanel("cpu"),
+            DashboardPanel("cam")
+        ]
+    )
 
     #Create a streaming camera server
     from kervi.camera import CameraStreamer
@@ -28,8 +39,8 @@ if __name__ == '__main__':
     #link to sys area top right
     SENSOR_CPU_LOAD.link_to_dashboard("*", "sys-header")
     #link to a panel, show value in panel header and chart in panel body
-    SENSOR_CPU_LOAD.link_to_dashboard("system", "cpu", type="value", size=2, link_to_header=True)
-    SENSOR_CPU_LOAD.link_to_dashboard("system", "cpu", type="chart", size=2)
+    SENSOR_CPU_LOAD.link_to_dashboard("system", "cpu", type="value", link_to_header=True)
+    SENSOR_CPU_LOAD.link_to_dashboard("system", "cpu", type="chart")
 
     #build in sensor that measures cpu temperature
     SENSOR_CPU_TEMP = Sensor("CPUTempSensor", "", CPUTempSensorDeviceDriver())

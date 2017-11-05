@@ -15,8 +15,14 @@ if __name__ == '__main__':
     from kervi.hal import GPIO
 
     from kervi.dashboard import Dashboard, DashboardPanel
-    DASHBOARD = Dashboard("module-{id}", "{{name}}", is_default=True)
-    DASHBOARD.add_panel(DashboardPanel("light", columns=2, rows=2, title="Light"))
+    Dashboard(
+        "module-{id}",
+        "{{name}}",
+        [
+            DashboardPanel("light", title="Light")
+        ],
+        is_default=True
+    )
 
     from kervi.sensor import Sensor
     from kervi_devices.platforms.common.sensors.memory_use import MemUseSensorDeviceDriver
@@ -25,8 +31,8 @@ if __name__ == '__main__':
     #link to sys area top right
     SENSOR_1.link_to_dashboard("*", "sys-header")
     #link to a panel, show value in panel header and chart in panel body
-    SENSOR_1.link_to_dashboard("module-{id}", "memory", type="value", size=2, link_to_header=True)
-    SENSOR_1.link_to_dashboard("module-{id}", "memory", type="chart", size=2)
+    SENSOR_1.link_to_dashboard("module-{id}", "memory", type="value", link_to_header=True)
+    SENSOR_1.link_to_dashboard("module-{id}", "memory", type="chart")
 
 
     #More on sensors https://kervi.github.io/sensors.html
