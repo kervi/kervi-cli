@@ -1,5 +1,5 @@
 """ Module for a sensor """
-from kervi.sensor import Sensor
+from kervi.sensors.sensor import Sensor
 
 
 #define your app specific sensors here

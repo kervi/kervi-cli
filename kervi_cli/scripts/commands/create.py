@@ -113,7 +113,7 @@ def application(app_name, app_id, single_file_app, add_camera):
         _create_cam(template_path)
 
     click.echo('Your app is ready')
-    click.echo("start it with python "+app_id+".py")
+    click.echo("start it with 'python "+app_id+".py'")
 
 @create.command()
 def camera():

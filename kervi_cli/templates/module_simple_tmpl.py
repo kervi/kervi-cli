@@ -14,7 +14,7 @@ if __name__ == '__main__':
     #Important GPIO must be imported after module creation
     from kervi.hal import GPIO
 
-    from kervi.dashboard import Dashboard, DashboardPanel
+    from kervi.dashboards import Dashboard, DashboardPanel
     Dashboard(
         "module-{id}",
         "{{name}}",
@@ -24,8 +24,8 @@ if __name__ == '__main__':
         is_default=True
     )
 
-    from kervi.sensor import Sensor
-    from kervi_devices.platforms.common.sensors.memory_use import MemUseSensorDeviceDriver
+    from kervi.sensors.sensor import Sensor
+    from kervi.devices.platforms.common.sensors.memory_use import MemUseSensorDeviceDriver
     #build in sensor that measures cpu use
     SENSOR_1 = Sensor("MemUseSensor", "Memory", MemUseSensorDeviceDriver())
     #link to sys area top right
