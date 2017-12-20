@@ -1,6 +1,10 @@
 import distutils
 from setuptools import setup
-from kervi_cli.version import VERSION
+
+try:
+    from kervi_cli.version import VERSION
+except:
+    VERSION = "0.0"
 
 try:
     distutils.dir_util.remove_tree("dist")
