@@ -8,7 +8,7 @@ Dashboard(
     "app",
     "My dashboard",
     [
-        DashboardPanel("light", title="Light"),
+        DashboardPanel("fan", title="Fan"),
         DashboardPanel("sensors", title="Sensors")
     ],
     is_default=True
