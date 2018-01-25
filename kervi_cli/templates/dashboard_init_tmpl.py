@@ -21,7 +21,8 @@ Dashboard(
         DashboardPanel("cpu"),
         DashboardPanel("memory"),
         DashboardPanel("disk"),
-        DashboardPanel("power", title="Power"),
+        DashboardPanel("device", title="device"),
         DashboardPanel("log", title="Log", user_log=True)
-    ]
+    ],
+    user_groups=["admin"]
 )

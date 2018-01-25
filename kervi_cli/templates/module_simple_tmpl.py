@@ -1,16 +1,6 @@
 if __name__ == '__main__':
     from kervi.module import Module
-    APP_MODULE = Module({{
-        "info":{{
-            "id":"{id}",
-            "name":"{name}"
-        }},
-        "network":{{
-            "IPAddress": "{module_ip}",
-            "IPRootAddress": "{app_ip}",
-            "IPCRootPort":{base_port},
-        }}
-    }})
+    APP_MODULE = Module()
     #Important GPIO must be imported after module creation
     from kervi.hal import GPIO
 
