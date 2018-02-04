@@ -1,6 +1,6 @@
 """ Sample system controller """
 from kervi.controllers.controller import Controller
-from kervi.values import DynamicBoolean
+from kervi.values import BooleanValue
 from kervi.actions import action, Actions
 
 class SystemController(Controller):

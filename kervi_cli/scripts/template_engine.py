@@ -1,7 +1,6 @@
 """ Super simple template engine copied from Eric BREHAULT on github. """
 import string
 
-
 class SuperFormatter(string.Formatter):
     """World's simplest Template engine."""
 
