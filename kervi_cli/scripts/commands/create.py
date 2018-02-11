@@ -69,6 +69,7 @@ def create_full_layout(template_path):
 
 @click.group()
 def create():
+    """Create and scafold application, module"""
     pass
 
 @create.command()
@@ -77,6 +78,7 @@ def create():
 @click.option('--single_file_app', is_flag=True, help='Create the kervi application in one file')
 @click.option('--add_camera', default=False, help='adds a camera')
 def application(app_name, app_id, single_file_app, add_camera):
+    """Scafolds a kervi application."""
     template_engine = SuperFormatter()
 
     cli_path = os.path.dirname(kervi_cli.__file__)
@@ -86,7 +88,7 @@ def application(app_name, app_id, single_file_app, add_camera):
         if not os.path.exists(app_id+".py"):
             copyfile(template_path + "app_simple_tmpl.py", app_id+".py")
 
-        app_config_template = open(template_path+"app_config_tmpl.json", 'r').read()
+        app_config_template = open(template_path+"app_config_tmpl.py", 'r').read()
         app_config_content = template_engine.format(
             app_config_template,
             id=app_id,
@@ -106,7 +108,7 @@ def application(app_name, app_id, single_file_app, add_camera):
     
     else:
         app_template = open(template_path+"app_tmpl.py", 'r').read()
-        app_config_template = open(template_path+"app_config_tmpl.json", 'r').read()
+        app_config_template = open(template_path+"app_config_tmpl.py", 'r').read()
 
         app_file_content = template_engine.format(
             app_template,
@@ -152,11 +154,11 @@ def application(app_name, app_id, single_file_app, add_camera):
     click.echo('Your app is ready')
     click.echo("start it with 'python "+app_id+".py'")
 
-@create.command()
-def camera():
-    cli_path = os.path.dirname(kervi_cli.__file__)
-    template_path = os.path.join(cli_path, "templates/")
-    _create_cam(template_path)
+# @create.command()
+# def camera():
+#     cli_path = os.path.dirname(kervi_cli.__file__)
+#     template_path = os.path.join(cli_path, "templates/")
+#     _create_cam(template_path)
 
 @create.command()
 @click.argument('module_id', "Id of module, used in code to identify the module")
@@ -164,13 +166,14 @@ def camera():
 @click.option('--single_file_module', is_flag=True, help='Create the kervi module in one file')
 @click.option('--add_camera', default=False, help='adds a camera')
 def module(module_name, module_id, single_file_module, add_camera):
+    """Scafolds a kervi application module """
     template_engine = SuperFormatter()
 
     cli_path = os.path.dirname(kervi_cli.__file__)
     template_path = os.path.join(cli_path, "templates/")
 
     module_template = open(template_path+"module_simple_tmpl.py", 'r').read()
-    module_config_template = open(template_path+"module_simple_tmpl.py", 'r').read()
+    module_config_template = open(template_path+"module_config_tmpl.py", 'r').read()
 
 
     module_file_content = template_engine.format(
@@ -217,10 +220,3 @@ def module(module_name, module_id, single_file_module, add_camera):
     click.echo('Your module is ready')
     click.echo("start it with python3 " + module_id + ".py")
 
-@create.command()
-@click.argument('user_name', "user name")
-@click.password_option()
-@click.option('--name',  help='name of user')
-@click.option('--roles',  help='user roles')
-def user(name, user_name, password, roles):
-    print(name, user_name, roles, password)

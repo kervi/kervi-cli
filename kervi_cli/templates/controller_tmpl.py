@@ -45,10 +45,11 @@ class FanController(Controller):
                 self.fan_speed.value = 0
             else:
                 max_span = self.max_temp.value - self.trigger_temp.value
-                speed = (temp / max_span) * 100
-                if speed > 100:
-                    speed = 100
-                self.fan_speed.value = speed
+                if max_span > 0:
+                    speed = (temp / max_span) * 100
+                    if speed > 100:
+                        speed = 100
+                    self.fan_speed.value = speed
         else:
             self.fan_speed.value = 0
     
