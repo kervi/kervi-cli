@@ -163,9 +163,10 @@ def application(app_name, app_id, single_file_app, add_camera):
 @create.command()
 @click.argument('module_id', "Id of module, used in code to identify the module")
 @click.argument('module_name', 'Name of module, used as title in UI')
+@click.argument('app_id', 'Id of the kervi app that this module should connect to')
 @click.option('--single_file_module', is_flag=True, help='Create the kervi module in one file')
 @click.option('--add_camera', default=False, help='adds a camera')
-def module(module_name, module_id, single_file_module, add_camera):
+def module(module_name, module_id, app_id, single_file_module, add_camera):
     """Scafolds a kervi application module """
     template_engine = SuperFormatter()
 
@@ -179,6 +180,7 @@ def module(module_name, module_id, single_file_module, add_camera):
     module_file_content = template_engine.format(
         module_template,
         id=module_id,
+        app_id=app_id,
         name=module_name,
         log=module_id,
         base_port=nethelper.get_free_port([9500, 9510]),
@@ -192,6 +194,7 @@ def module(module_name, module_id, single_file_module, add_camera):
         module_config_template,
         id=module_id,
         name=module_name,
+        app_id=app_id,
         log=module_id,
         base_port=nethelper.get_free_port([9500, 9510]),
         secret=uuid.uuid4(),
