@@ -76,7 +76,7 @@ def create():
 @click.argument('app_id', "app_id, id of application, used in code to identify app")
 @click.argument('app_name', 'Name of app, used as title in UI')
 @click.option('--single_file_app', is_flag=True, help='Create the kervi application in one file')
-@click.option('--add_camera', default=False, help='adds a camera')
+@click.option('--add_camera', default=True, help='Adds a camera code (Raspberry pi only)')
 def application(app_name, app_id, single_file_app, add_camera):
     """Scafolds a kervi application."""
     template_engine = SuperFormatter()
