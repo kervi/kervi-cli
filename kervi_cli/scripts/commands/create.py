@@ -69,16 +69,20 @@ def create_full_layout(template_path):
 
 @click.group()
 def create():
-    """Create and scafold application, module"""
+    """Create and scaffold application, module"""
     pass
 
 @create.command()
-@click.argument('app_id', "app_id, id of application, used in code to identify app")
-@click.argument('app_name', 'Name of app, used as title in UI')
-@click.option('--single_file_app', is_flag=True, help='Create the kervi application in one file')
-@click.option('--add_camera', default=True, help='Adds a camera code (Raspberry pi only)')
-def application(app_name, app_id, single_file_app, add_camera):
-    """Scafolds a kervi application."""
+@click.argument('app-id', nargs=1)#, "app_id, id of application, used in code to identify app")
+@click.argument('app-name', nargs=1)#, 'Name of app, used as title in UI')
+@click.option('--single-file-app', is_flag=True, default=False, help='Create the kervi application in one file')
+@click.option('--add-camera', is_flag=True, default=False, help='Adds camera code (Raspberry pi only)')
+def application(app_id, app_name, single_file_app, add_camera):
+    """Scaffolds a kervi application."""
+    #app_id = appid
+    #app_name = appname
+    #single_file_app = singlefileapp
+    #add_camera = addcamera
     template_engine = SuperFormatter()
 
     cli_path = os.path.dirname(kervi_cli.__file__)
@@ -148,7 +152,7 @@ def application(app_name, app_id, single_file_app, add_camera):
         create_full_layout(template_path)
 
 
-    if add_camera:
+    if add_camera and not single_file_app:
         _create_cam(template_path)
 
     click.echo('Your app is ready')
@@ -161,9 +165,9 @@ def application(app_name, app_id, single_file_app, add_camera):
 #     _create_cam(template_path)
 
 @create.command()
-@click.argument('module_id', "Id of module, used in code to identify the module")
-@click.argument('module_name', 'Name of module, used as title in UI')
-@click.argument('app_id', 'Id of the kervi app that this module should connect to')
+@click.argument('module-id', nargs=1)#, "Id of module, used in code to identify the module")
+@click.argument('module-name', nargs=1)#, 'Name of module, used as title in UI')
+@click.argument('app_id', nargs=1)#, 'Id of the kervi app that this module should connect to')
 @click.option('--single_file_module', is_flag=True, help='Create the kervi module in one file')
 @click.option('--add_camera', default=False, help='adds a camera')
 def module(module_name, module_id, app_id, single_file_module, add_camera):
