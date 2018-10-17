@@ -1,22 +1,19 @@
 """ My kervi application """
 from kervi.application import Application
-import kervi.utility.nethelper as nethelper
+from kervi.actions import action, Actions
 
 if __name__ == '__main__':
-    APP = Application({{
-        "info":{{
-            "id":"{id}",
-            "name":"{name}",
-            "appKey":"",
-        }},
-        "modules":["sensors", "controllers", "cams"],
-        "network":{{
-            "IPAddress": nethelper.get_ip_address(),
-            "IPCRootPort":{base_port},
-            "WebSocketPort":{websocket_port},
-            "WebPort": {ui_port},
-            "IPCSecret":b"{secret}"
-        }},
-    }})
+    APP = Application()
+
+    @action
+    def app_main():
+        #action called when app is loaded and ready
+        Actions["fan_controller.start"]()
+
+
+    @action
+    def app_exit():
+        #action called when app is about to stop
+        Actions["fan_controller.stop"]()
 
     APP.run()
